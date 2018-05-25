@@ -1,5 +1,3 @@
-import sys
-
 import pygame
 
 
@@ -17,8 +15,9 @@ def run_game():
     pygame.display.set_caption('Alien Inv')
 
     while True:  # Game Loop
-        gf.check_events()
-        gf.update_screen(screen_settings,screen,ship)
+        gf.check_events(ship)
+        ship.update()
+        gf.update_screen(screen_settings, screen, ship)
 
 
 run_game()
