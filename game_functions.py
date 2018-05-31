@@ -23,6 +23,7 @@ def update_screen(screen_settings, screen, ship):
     ship.blitme()
     pygame.display.flip()
 
+
 def check_keydown_events(event, ship):
     if event.key == pygame.K_RIGHT:
         ship.moving_right = True
@@ -32,6 +33,7 @@ def check_keydown_events(event, ship):
         ship.moving_up = True
     elif event.key == pygame.K_DOWN:
         ship.moving_down = True
+
 
 def check_keyup_events(event, ship):
     if event.key == pygame.K_RIGHT:

@@ -3,7 +3,7 @@ import pygame
 from settings import Settings
 
 
-class Ship():
+class Ship:
     def __init__(self, screen):
         self.screen = screen
 
