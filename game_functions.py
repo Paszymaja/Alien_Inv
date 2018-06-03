@@ -16,12 +16,14 @@ def check_events(ship):
             check_keyup_events(event, ship)
 
 
-def update_screen(screen_settings, screen, ship):
-    background = Background(screen_settings.bg_image, [0,0])
+def update_screen(screen_settings, screen, ship, y, background):
     screen.fill(screen_settings.bg_color)
-    screen.blit(background.image, background.rect)
+    rel_y = y % background.height
+    screen.blit(background.image, (0, rel_y - background.height))
+    if rel_y < 720:
+        screen.blit(background.image, (0, rel_y))
     ship.blitme()
-    pygame.display.flip()
+    pygame.display.update()
 
 
 def check_keydown_events(event, ship):

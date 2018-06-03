@@ -5,4 +5,4 @@ class Settings:
         self.bg_color = (230, 230, 230)
         self.bg_image = 'background.png'
 
-        self.ship_speed = 5
+        self.ship_speed = 2.5
