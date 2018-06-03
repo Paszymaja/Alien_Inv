@@ -1,9 +1,5 @@
 import sys
-
 import pygame
-
-from background import Background
-
 
 
 def check_events(ship):
@@ -16,11 +12,11 @@ def check_events(ship):
             check_keyup_events(event, ship)
 
 
-def update_screen(screen_settings, screen, ship, y, background):
+def update_screen(screen_settings, screen, ship, screen_y, background):
     screen.fill(screen_settings.bg_color)
-    rel_y = y % background.height
+    rel_y = screen_y % background.height
     screen.blit(background.image, (0, rel_y - background.height))
-    if rel_y < 720:
+    if rel_y < screen_settings.screen_height:
         screen.blit(background.image, (0, rel_y))
     ship.blitme()
     pygame.display.update()
