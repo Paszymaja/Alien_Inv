@@ -13,7 +13,7 @@ def check_events(settings, screen, ship, bullets):
             check_keyup_events(event, ship)
 
 
-def update_screen(screen_settings, screen, ship, screen_y, background, bullets):
+def update_screen(screen_settings, screen, ship, screen_y, background, bullets, enemy):
     screen.fill(screen_settings.bg_color)
     rel_y = screen_y % background.height
     screen.blit(background.image, (0, rel_y - background.height))
@@ -22,6 +22,7 @@ def update_screen(screen_settings, screen, ship, screen_y, background, bullets):
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     ship.blitme()
+    enemy.blitme()
     pygame.display.update()
 
 
@@ -35,8 +36,9 @@ def check_keydown_events(event, settings, screen, ship, bullets):
     elif event.key == pygame.K_DOWN:
         ship.moving_down = True
     elif event.key == pygame.K_SPACE:
-        new_bullet = Bullet(settings, screen, ship)
-        bullets.add(new_bullet)
+        fire_bullet(settings, screen, ship, bullets)
+    elif event.key == pygame.K_q:
+        sys.exit()
 
 
 def check_keyup_events(event, ship):
@@ -48,3 +50,16 @@ def check_keyup_events(event, ship):
         ship.moving_up = False
     elif event.key == pygame.K_DOWN:
         ship.moving_down = False
+
+
+def update_bullets(bullets):
+    bullets.update()
+    for bullet in bullets.copy():
+        if bullet.rect.bottom <= 0:
+            bullets.remove(bullet)
+
+
+def fire_bullet(settings, screen, ship, bullets):
+    if len(bullets) < settings.bullet_allow:
+        new_bullet = Bullet(settings, screen, ship)
+        bullets.add(new_bullet)
