@@ -19,3 +19,6 @@ class Enemy(Sprite):
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
+
+    def update(self):
+        self.rect.y += 1

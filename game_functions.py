@@ -1,6 +1,9 @@
 import sys
 import pygame
+
 from bullet import Bullet
+from enemy import Enemy
+
 
 
 def check_events(settings, screen, ship, bullets):
@@ -22,7 +25,8 @@ def update_screen(screen_settings, screen, ship, screen_y, background, bullets, 
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     ship.blitme()
-    enemy.blitme()
+    enemy_start(screen_settings, screen, enemy)
+    enemy.draw(screen)
     pygame.display.update()
 
 
@@ -63,3 +67,17 @@ def fire_bullet(settings, screen, ship, bullets):
     if len(bullets) < settings.bullet_allow:
         new_bullet = Bullet(settings, screen, ship)
         bullets.add(new_bullet)
+
+
+def enemy_start(settings, screen, enemies):
+    if len(enemies) < 3:
+        new_enemy = Enemy(screen, settings)
+        enemies.add(new_enemy)
+
+
+def update_enemies(enemies):
+    enemies.update()
+    for enemy in enemies.copy():
+        if enemy.rect.bottom == 720:
+            enemies.remove(enemy)
+
