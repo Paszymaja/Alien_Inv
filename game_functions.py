@@ -16,7 +16,7 @@ def check_events(settings, screen, ship, bullets):
             check_keyup_events(event, ship)
 
 
-def update_screen(screen_settings, screen, ship, screen_y, background, bullets, enemy):
+def update_screen(screen_settings, screen, ship, screen_y, background, bullets, enemy, last):
     screen.fill(screen_settings.bg_color)
     rel_y = screen_y % background.height
     screen.blit(background.image, (0, rel_y - background.height))
@@ -25,9 +25,12 @@ def update_screen(screen_settings, screen, ship, screen_y, background, bullets, 
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     ship.blitme()
-    enemy_start(screen_settings, screen, enemy)
+    enemy_start(screen_settings, screen, enemy, last)
+
+
     enemy.draw(screen)
     pygame.display.update()
+
 
 
 def check_keydown_events(event, settings, screen, ship, bullets):
@@ -69,10 +72,13 @@ def fire_bullet(settings, screen, ship, bullets):
         bullets.add(new_bullet)
 
 
-def enemy_start(settings, screen, enemies):
-    if len(enemies) < 3:
+def enemy_start(settings, screen, enemies, last):
+    now = pygame.time.get_ticks()
+    if len(enemies) < 3 and now - last >= 3000:
         new_enemy = Enemy(screen, settings)
         enemies.add(new_enemy)
+        print(len(enemies))
+        return now
 
 
 def update_enemies(enemies):

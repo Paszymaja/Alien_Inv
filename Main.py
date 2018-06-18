@@ -19,13 +19,15 @@ def run_game():
     background = Background(screen_settings.bg_image, [0, 0])
     bullets = Group()
     enemies = Group()
+    global last
+    last = pygame.time.get_ticks()
 
     while True:  # Game Loop
         gf.check_events(screen_settings, screen, ship, bullets)
         ship.update()
         gf.update_bullets(bullets)
         gf.update_enemies(enemies)
-        gf.update_screen(screen_settings, screen, ship, screen_y, background, bullets, enemies)
+        gf.update_screen(screen_settings, screen, ship, screen_y, background, bullets, enemies, last)
         screen_y += screen_settings.bg_speed
 
 
