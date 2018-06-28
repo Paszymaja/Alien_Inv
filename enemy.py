@@ -12,7 +12,7 @@ class Enemy(Sprite):
         self.image = pygame.image.load('Sprites/Enemy.png')
         self.rect = self.image.get_rect()
 
-        self.rect.x = random.randint(0, 1280)
+        self.rect.x = random.randint(30, 1200)
         self.rect.y = self.rect.height
 
         self.x = float(self.rect.x)

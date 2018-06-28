@@ -4,6 +4,7 @@ import pygame
 from bullet import Bullet
 from enemy import Enemy
 
+globlast = pygame.time.get_ticks()
 
 
 def check_events(settings, screen, ship, bullets):
@@ -16,7 +17,7 @@ def check_events(settings, screen, ship, bullets):
             check_keyup_events(event, ship)
 
 
-def update_screen(screen_settings, screen, ship, screen_y, background, bullets, enemy, last):
+def update_screen(screen_settings, screen, ship, screen_y, background, bullets, enemy):
     screen.fill(screen_settings.bg_color)
     rel_y = screen_y % background.height
     screen.blit(background.image, (0, rel_y - background.height))
@@ -25,7 +26,7 @@ def update_screen(screen_settings, screen, ship, screen_y, background, bullets, 
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     ship.blitme()
-    enemy_start(screen_settings, screen, enemy, last)
+    enemy_start(screen_settings, screen, enemy)
 
 
     enemy.draw(screen)
@@ -59,11 +60,12 @@ def check_keyup_events(event, ship):
         ship.moving_down = False
 
 
-def update_bullets(bullets):
+def update_bullets(bullets, enemies):
     bullets.update()
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
+    collisions = pygame.sprite.groupcollide(bullets, enemies, True, True)
 
 
 def fire_bullet(settings, screen, ship, bullets):
@@ -72,13 +74,15 @@ def fire_bullet(settings, screen, ship, bullets):
         bullets.add(new_bullet)
 
 
-def enemy_start(settings, screen, enemies, last):
+def enemy_start(settings, screen, enemies):
+    global globlast
     now = pygame.time.get_ticks()
-    if len(enemies) < 3 and now - last >= 3000:
-        new_enemy = Enemy(screen, settings)
-        enemies.add(new_enemy)
-        print(len(enemies))
-        return now
+    if now - globlast >= 900:
+        if len(enemies) < 5:
+            new_enemy = Enemy(screen, settings)
+            enemies.add(new_enemy)
+            print(len(enemies))
+            globlast = now
 
 
 def update_enemies(enemies):
