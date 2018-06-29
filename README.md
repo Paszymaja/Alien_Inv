@@ -16,7 +16,7 @@ You have 3 lives/ships.
 		<td>shoot</td>
 	</tr>
 	<tr>
-		<td><code>Q</code> or <code>z</code></td>
+		<td><code>Q</code></td>
 		<td>exit game</td>
 	</tr>
 </table>
