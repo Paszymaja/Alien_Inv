@@ -18,7 +18,7 @@ def check_events(settings, screen, ship, bullets):
             check_keyup_events(event, ship)
 
 
-def update_screen(screen_settings, screen, ship, screen_y, background, bullets, enemy):
+def update_screen(screen_settings, screen, ship, screen_y, background, bullets, enemy, play_button, stats):
     screen.fill(screen_settings.bg_color)
     rel_y = screen_y % background.height
     screen.blit(background.image, (0, rel_y - background.height))
@@ -28,6 +28,9 @@ def update_screen(screen_settings, screen, ship, screen_y, background, bullets, 
         bullet.draw_bullet()
     ship.blitme()
     enemy_start(screen_settings, screen, enemy)
+
+    if not stats.game_active:
+        play_button.draw_button()
 
 
     enemy.draw(screen)
