@@ -43,6 +43,10 @@ class Ship:
             self.image = pygame.image.load('Sprites/Ship.png')
 
 
+    def center_ship(self):
+        self.rect.centerx = self.screen_rect.centerx
+        self.rect.bottom = self.screen_rect.bottom
+
 
 
 

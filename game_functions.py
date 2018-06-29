@@ -1,6 +1,7 @@
 import sys
 import pygame
 
+from time import sleep
 from bullet import Bullet
 from enemy import Enemy
 
@@ -81,13 +82,38 @@ def enemy_start(settings, screen, enemies):
         if len(enemies) < 5:
             new_enemy = Enemy(screen, settings)
             enemies.add(new_enemy)
-            print(len(enemies))
             globlast = now
 
 
-def update_enemies(enemies):
+def update_enemies(enemies, ship, settings, stats, screen, bullets):
     enemies.update()
     for enemy in enemies.copy():
         if enemy.rect.bottom == 720:
             enemies.remove(enemy)
+    if pygame.sprite.spritecollideany(ship, enemies):
+        ship_hit(settings, stats, screen, ship, bullets, enemies)
+
+
+def ship_hit(settings, stats, screen, ship, bullets, enemies):
+    if stats.ship_left > 0:
+        stats.ship_left -= 1
+
+        enemies.empty()
+        bullets.empty()
+
+        enemy_start(settings, screen, enemies)
+        ship.center_ship()
+
+        sleep(0.5)
+    else:
+        stats.game_active = False
+
+
+def enemy_bottom(settings, stats, screen, ship, enemies, bullets):
+    screen_rect = screen.get_rect()
+    for enemy in enemies.sprites():
+        if enemy.rect.bottom >= screen_rect.bottom:
+            ship_hit(settings, stats, screen, ship, bullets, enemies)
+
+
 
