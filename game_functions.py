@@ -8,7 +8,7 @@ from enemy import Enemy
 globlast = pygame.time.get_ticks()
 
 
-def check_events(settings, screen, ship, bullets):
+def check_events(settings, screen, ship, bullets, stats, play_button, enemies):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -16,6 +16,9 @@ def check_events(settings, screen, ship, bullets):
             check_keydown_events(event, settings, screen, ship, bullets)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            check_play_button(stats, play_button, mouse_x, mouse_y, enemies, bullets)
 
 
 def update_screen(screen_settings, screen, ship, screen_y, background, bullets, enemy, play_button, stats):
@@ -69,7 +72,7 @@ def update_bullets(bullets, enemies):
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
-    collisions = pygame.sprite.groupcollide(bullets, enemies, True, True)
+    pygame.sprite.groupcollide(bullets, enemies, True, True)
 
 
 def fire_bullet(settings, screen, ship, bullets):
@@ -90,6 +93,7 @@ def enemy_start(settings, screen, enemies):
 
 def update_enemies(enemies, ship, settings, stats, screen, bullets):
     enemies.update()
+    enemy_bottom(settings, stats, screen, ship, enemies, bullets)
     for enemy in enemies.copy():
         if enemy.rect.bottom == 720:
             enemies.remove(enemy)
@@ -110,6 +114,8 @@ def ship_hit(settings, stats, screen, ship, bullets, enemies):
         sleep(0.5)
     else:
         stats.game_active = False
+        pygame.mouse.set_visible(True)
+
 
 
 def enemy_bottom(settings, stats, screen, ship, enemies, bullets):
@@ -117,6 +123,19 @@ def enemy_bottom(settings, stats, screen, ship, enemies, bullets):
     for enemy in enemies.sprites():
         if enemy.rect.bottom >= screen_rect.bottom:
             ship_hit(settings, stats, screen, ship, bullets, enemies)
+            break
+
+
+def check_play_button(stats, play_button, mouse_x, mouse_y, enemies, bullets):
+    button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
+    if button_clicked:
+        pygame.mouse.set_visible(False)
+        stats.game_active = True
+        stats.reset_stats()
+
+        enemies.empty()
+        bullets.empty()
+
 
 
 
