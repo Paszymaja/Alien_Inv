@@ -25,7 +25,7 @@ class Ship:
         self.screen.blit(self.image, self.rect)
 
 
-    def update(self):
+    def update(self): # zmiana sprite statku zaleznie od strony
         ship_settings = Settings()
         if self.moving_right and self.rect.right < self.screen_rect.right:
             self.rect.centerx += ship_settings.ship_speed

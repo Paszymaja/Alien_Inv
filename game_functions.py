@@ -5,7 +5,7 @@ from time import sleep
 from bullet import Bullet
 from enemy import Enemy
 
-globlast = pygame.time.get_ticks()
+globlast = pygame.time.get_ticks()  # Zmienna globalna ktora przechowuje czas last
 
 
 def check_events(settings, screen, ship, bullets, stats, play_button, enemies):
@@ -32,13 +32,11 @@ def update_screen(screen_settings, screen, ship, screen_y, background, bullets, 
     ship.blitme()
     enemy_start(screen_settings, screen, enemy)
 
-    if not stats.game_active:
+    if not stats.game_active:  # przycisk startu
         play_button.draw_button()
-
 
     enemy.draw(screen)
     pygame.display.update()
-
 
 
 def check_keydown_events(event, settings, screen, ship, bullets):
@@ -117,7 +115,6 @@ def ship_hit(settings, stats, screen, ship, bullets, enemies):
         pygame.mouse.set_visible(True)
 
 
-
 def enemy_bottom(settings, stats, screen, ship, enemies, bullets):
     screen_rect = screen.get_rect()
     for enemy in enemies.sprites():
@@ -135,7 +132,3 @@ def check_play_button(stats, play_button, mouse_x, mouse_y, enemies, bullets):
 
         enemies.empty()
         bullets.empty()
-
-
-
-
