@@ -1,13 +1,12 @@
 import pygame
-
-from settings import Settings
-from ship import Ship
-from background import Background
 from pygame.sprite import Group
-from stats import GameStats
-from button import Button
 
-import game_functions as gf
+from src import game_functions as gf
+from src.background import Background
+from src.button import Button
+from settings import Settings
+from src.ship import Ship
+from src.stats import GameStats
 
 
 def run_game():
@@ -24,17 +23,14 @@ def run_game():
     bullets = Group()
     enemies = Group()
 
-
     while True:  # Game Loop
-        gf.check_events(screen_settings, screen, ship, bullets, stats, play_button, enemies,)
+        gf.check_events(screen_settings, screen, ship, bullets, stats, play_button, enemies, )
         if stats.game_active:
             ship.update()
             gf.update_bullets(bullets, enemies)
             gf.update_enemies(enemies, ship, screen_settings, stats, screen, bullets)
         gf.update_screen(screen_settings, screen, ship, screen_y, background, bullets, enemies, play_button, stats)
         screen_y += screen_settings.bg_speed
-
-
 
 
 run_game()

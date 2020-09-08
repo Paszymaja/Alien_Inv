@@ -20,12 +20,10 @@ class Ship:
         self.moving_up = False
         self.moving_down = False
 
-
     def blitme(self):
         self.screen.blit(self.image, self.rect)
 
-
-    def update(self): # zmiana sprite statku zaleznie od strony
+    def update(self):  # zmiana sprite statku zaleznie od strony
         ship_settings = Settings()
         if self.moving_right and self.rect.right < self.screen_rect.right:
             self.rect.centerx += ship_settings.ship_speed
@@ -42,11 +40,6 @@ class Ship:
         else:
             self.image = pygame.image.load('Sprites/Ship.png')
 
-
     def center_ship(self):
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.screen_rect.bottom
-
-
-
-

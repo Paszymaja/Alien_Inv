@@ -6,11 +6,11 @@ class Settings:
         self.bg_image = 'Sprites/background.png'
         self.bg_speed = 0.45
 
-        # ustawienia statku
+        # ship settings
         self.ship_speed = 2.5
         self.ship_limit = 0
 
-        # ustawienia pocisku
+        # bullet settings
         self.bullet_speed_factor = 3
         self.bullet_width = 4
         self.bullet_height = 15

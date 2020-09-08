@@ -1,11 +1,12 @@
 import sys
+from time import sleep
+
 import pygame
 
-from time import sleep
-from bullet import Bullet
-from enemy import Enemy
+from src.bullet import Bullet
+from src.enemy import Enemy
 
-globlast = pygame.time.get_ticks()  # Zmienna globalna ktora przechowuje czas last
+glob_last = pygame.time.get_ticks()  # Zmienna globalna ktora przechowuje czas last
 
 
 def check_events(settings, screen, ship, bullets, stats, play_button, enemies):
@@ -32,7 +33,7 @@ def update_screen(screen_settings, screen, ship, screen_y, background, bullets, 
     ship.blitme()
     enemy_start(screen_settings, screen, enemy)
 
-    if not stats.game_active:  # przycisk startu
+    if not stats.game_active:  # start button
         play_button.draw_button()
 
     enemy.draw(screen)
@@ -80,13 +81,13 @@ def fire_bullet(settings, screen, ship, bullets):
 
 
 def enemy_start(settings, screen, enemies):
-    global globlast
+    global glob_last
     now = pygame.time.get_ticks()
-    if now - globlast >= 900:
+    if now - glob_last >= 900:
         if len(enemies) < 5:
             new_enemy = Enemy(screen, settings)
             enemies.add(new_enemy)
-            globlast = now
+            glob_last = now
 
 
 def update_enemies(enemies, ship, settings, stats, screen, bullets):
